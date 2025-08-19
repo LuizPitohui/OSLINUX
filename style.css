@@ -1,0 +1,417 @@
+/* --- Configurações Globais e Dark Mode --- */
+:root {
+    --background-color: #121212;
+    --text-color: #E0E0E0;
+    --primary-color: #39FF14; /* Verde-limão */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth; /* Rolagem suave entre seções */
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Roboto Mono', monospace;
+    overflow-x: hidden; /* Previne rolagem horizontal */
+}
+
+section {
+    min-height: 100vh; /* Cada seção ocupa pelo menos a altura inteira da tela */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 2rem;
+}
+
+h1, h2 {
+    color: var(--primary-color);
+}
+
+/* --- Estilos da Seção 1: Abertura Impactante --- */
+#hero {
+    position: relative; /* Necessário para o overlay */
+    justify-content: center;
+    text-align: center;
+    
+    /* Configurações da imagem de fundo */
+    background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop' );
+    background-size: cover; /* Garante que a imagem cubra toda a seção */
+    background-position: center; /* Centraliza a imagem */
+    background-attachment: fixed; /* A MÁGICA DO PARALLAX ACONTECE AQUI */
+}
+
+/* Overlay (camada escura) para melhorar a legibilidade do texto */
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Cor preta com 70% de opacidade */
+    z-index: 1; /* Coloca o overlay acima do fundo, mas abaixo do conteúdo */
+}
+
+/* Garante que o conteúdo fique acima do overlay */
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+#main-title {
+    font-size: 3rem;
+    border-right: 0.15em solid var(--primary-color);
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0 auto; /* Centraliza o título que agora tem largura definida */
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+/* ... (mantenha as animações @keyframes typing e @keyframes blink-caret como estão) ... */
+
+/* Indicador de rolagem (a seta pulsante) */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: pulse 2s infinite;
+    z-index: 2; /* Garante que fique acima do overlay */
+}
+
+#main-title {
+    font-size: 3rem;
+    border-right: 0.15em solid var(--primary-color); /* Simula o cursor do terminal */
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+/* Animação de digitação */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* Animação do cursor piscando */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--primary-color); }
+}
+
+/* Indicador de rolagem (a seta pulsante) */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: pulse 2s infinite;
+}
+
+.scroll-indicator span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-bottom: 2px solid var(--primary-color);
+    border-right: 2px solid var(--primary-color);
+    transform: rotate(45deg);
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(10px); }
+    100% { opacity: 0.5; transform: translateY(0); }
+}
+
+
+/* --- Estilos da Seção 2: O que é Linux? --- */
+#intro {
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 2rem;
+}
+
+.intro-text {
+    max-width: 50%;
+}
+
+.intro-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.intro-text p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+/* --- Estilos da Seção 3: História --- */
+#history {
+    background-color: #1a1a1a; /* Um fundo ligeiramente diferente para destacar a seção */
+}
+
+.history-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 2rem;
+}
+
+.history-container h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+}
+
+.timeline {
+    position: relative;
+}
+
+/* A linha vertical central da timeline */
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: var(--primary-color);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    /* Animação para a linha "crescer" */
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Estilo para quando a timeline estiver visível (classe adicionada via JS) */
+.timeline.visible::after {
+    transform: scaleY(1);
+}
+
+/* Container de cada evento */
+.timeline-event {
+    padding: 10px 40px;
+    position: relative;
+    width: 50%;
+    /* Esconde os eventos inicialmente */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Posiciona os eventos da esquerda */
+.timeline-event:nth-child(odd) {
+    left: 0;
+    padding-right: 70px;
+    text-align: right;
+    transform: translateX(-100px); /* Começa deslocado para a esquerda */
+}
+
+/* Posiciona os eventos da direita e define sua animação inicial */
+.timeline-event:nth-child(even) {
+    left: 50%;
+    transform: translateX(100px); /* Começa deslocado para a direita */
+}
+
+/* O círculo em cada evento na linha do tempo */
+.timeline-event::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -10px;
+    background-color: var(--background-color);
+    border: 4px solid var(--primary-color);
+    top: 25px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+/* Ajusta a posição do círculo para os eventos da direita */
+.timeline-event:nth-child(even)::after {
+    left: -10px;
+}
+
+/* Estilo para quando o evento se torna visível (ANIMAÇÃO FINAL) */
+.timeline-event.visible {
+    opacity: 1;
+    transform: translateX(0); /* Volta para a posição original */
+}
+
+.timeline-content {
+    padding: 20px 30px;
+    background-color: #2a2a2a;
+    border-radius: 6px;
+    border: 1px solid var(--primary-color);
+}
+
+.timeline-content h3 {
+    margin-bottom: 0.5rem;
+}
+
+/* --- Estilos da Seção 4: Distribuições --- */
+#distros {
+    background-color: var(--background-color );
+}
+
+.distros-container {
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.distros-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.distros-subtitle {
+    margin-bottom: 4rem;
+    font-size: 1.1rem;
+    color: #aaa;
+}
+
+.distro-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.distro-card {
+    width: 250px;
+    height: 300px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    border: 1px solid #333;
+    
+    /* Define a perspectiva para o efeito 3D */
+    perspective: 1000px; 
+    
+    /* Transição suave para quando o mouse sair do card */
+    transition: transform 0.6s ease-out;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    
+    /* Preserva o espaço 3D para os elementos filhos */
+    transform-style: preserve-3d; 
+    
+    /* Transição suave para o efeito de brilho e rotação */
+    transition: transform 0.1s linear;
+}
+
+.distro-card img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    /* Move a imagem um pouco para "frente" no eixo Z */
+    transform: translateZ(50px); 
+}
+
+.distro-card h3 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    /* Move o título um pouco para "frente", mas menos que a imagem */
+    transform: translateZ(30px);
+}
+
+/* --- Estilos da Seção 5: Curiosidades --- */
+#curiosities {
+    background-color: #1a1a1a;
+    padding: 6rem 2rem;
+}
+
+.curiosities-container {
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.curiosities-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+}
+
+.facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.fact-card {
+    background-color: #2a2a2a;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+    text-align: center;
+    
+    /* Prepara para a animação */
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Estilo para quando o card se torna visível */
+.fact-card.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.fact-icon {
+    font-size: 3rem; /* Tamanho do emoji */
+    margin-bottom: 1rem;
+}
+
+.fact-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+}
+
+.fact-card p {
+    line-height: 1.6;
+}
+
+/* --- Ajustes nos Estilos da Seção 4 para as Famílias --- */
+
+.distro-family {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 3rem; /* Espaço entre as famílias */
+    text-align: left;
+}
+
+.family-title {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.family-description {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 2rem;
+    max-width: 80ch; /* Limita a largura da linha para melhor legibilidade */
+}
+
+/* Ajusta a galeria de cards para alinhar à esquerda dentro da família */
+.distro-family .distro-gallery {
+    justify-content: flex-start;
+}
