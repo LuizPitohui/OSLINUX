@@ -415,3 +415,206 @@ h1, h2 {
 .distro-family .distro-gallery {
     justify-content: flex-start;
 }
+
+/* --- Estilos da Janela Modal --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    
+    /* Esconde a modal por padrão */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Classe para mostrar a modal */
+.modal-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: #2a2a2a;
+    padding: 2rem 3rem;
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    
+    /* Animação de surgimento */
+    transform: scale(0.9);
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-overlay.visible .modal-content {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+#modal-icon-container, #modal-img {
+    height: 90px; /* Garante altura consistente */
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-title {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#modal-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Adiciona um cursor de clique nos cards */
+.distro-card {
+    cursor: pointer;
+}
+
+/* --- REGRAS DE RESPONSIVIDADE PARA TELAS PEQUENAS --- */
+@media (max-width: 768px) {
+
+    /* ... (outros estilos responsivos que você pode adicionar depois) ... */
+
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    #modal-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* ================================================================== */
+/* --- REGRAS DE RESPONSIVIDADE --- */
+/* ================================================================== */
+
+/* --- Telas Médias (Tablets na vertical e celulares grandes na horizontal) --- */
+@media (max-width: 1024px) {
+    .distro-gallery {
+        justify-content: center; /* Garante que os cards fiquem centralizados se a linha quebrar */
+    }
+}
+
+
+/* --- Telas Pequenas (Tablets na vertical e Celulares) --- */
+@media (max-width: 768px) {
+
+    /* --- Ajustes Gerais --- */
+    section {
+        padding: 4rem 1.5rem; /* Reduz o espaçamento lateral nas seções */
+        min-height: auto; /* Permite que as seções tenham altura natural */
+    }
+
+    h2 {
+        font-size: 2rem; /* Reduz o tamanho dos títulos de seção */
+    }
+
+    /* --- Seção 1: Hero --- */
+    #main-title {
+        font-size: 2.2rem; /* Reduz o tamanho da fonte do título principal */
+        white-space: normal; /* Permite que o texto quebre a linha */
+        border-right: none; /* Remove o efeito de cursor piscando em telas pequenas */
+        animation: none; /* Remove a animação de digitação */
+        width: 100%;
+        text-align: center;
+        line-height: 1.3; /* Melhora a legibilidade do título quebrado */
+    }
+
+    /* --- Seção 2: Introdução --- */
+    #intro {
+        flex-direction: column; /* Coloca o texto em cima do espaço visual */
+        text-align: center;
+    }
+
+    .intro-text {
+        max-width: 100%; /* Permite que o texto ocupe toda a largura */
+    }
+
+    /* --- Seção 3: Linha do Tempo --- */
+    .timeline::after {
+        left: 20px; /* Move a linha vertical para a esquerda */
+    }
+
+    .timeline-event {
+        width: 100%; /* Cada evento ocupa a largura total */
+        padding-left: 50px; /* Espaço para a linha e o círculo */
+        padding-right: 10px;
+    }
+
+    /* Alinha todos os eventos à esquerda e reseta animações de lado */
+    .timeline-event:nth-child(odd),
+    .timeline-event:nth-child(even) {
+        left: 0;
+        text-align: left;
+        transform: translateX(0); /* Reseta a animação de entrada lateral */
+    }
+    
+    /* Re-habilita a animação de fade-in que foi resetada */
+    .timeline-event.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .timeline-event::after {
+        left: 11px; /* Posiciona o círculo sobre a linha */
+    }
+
+    /* --- Seção 4: Distribuições --- */
+    .distro-family {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .family-title {
+        text-align: center;
+    }
+
+    .family-description {
+        text-align: left; /* Mantém a descrição alinhada à esquerda para leitura */
+    }
+
+    .distro-gallery {
+        justify-content: center; /* Centraliza os cards */
+    }
+
+    /* --- Seção 5: Curiosidades --- */
+    .facts-grid {
+        grid-template-columns: 1fr; /* Faz com que cada card ocupe uma linha */
+    }
+    
+    /* --- Janela Modal --- */
+    .modal-content {
+        width: 95%;
+        padding: 2rem 1.5rem;
+    }
+
+    #modal-title {
+        font-size: 1.5rem;
+    }
+}
